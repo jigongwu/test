@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>供应商</title>
+		<link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+		<style>
+			
+			#back{
+				background-color:#F8F9FB;
+			}
+			#list{
+				background-color:white;
+				border-bottom-left-radius:  10px ;
+				border-bottom-right-radius: 10px ;
+			}
+			#buttom{
+				float: right;
+			}
+			#logo{
+				color: #0D6EFD;
+			}
+			.word{
+				color:#5F6265;
+			}
+		</style>
+	</head>
+	<body >
+		<div id="back">
+			<div class="container" id="list">
+				<h1><i class="fa fa-hospital-o" id="logo">&nbsp;</i>新增供应商</h1>
+				<hr />
+				<form>
+					<div class="mb-3 mt-4 word">供应商名称</div>
+					<div class="mb-4 mt-3">
+					<input type="text" class="form-control" placeholder="请输入供货商名称">
+					</div>
+					<div class="mb-3 mt-4 word">统一信用代码</div>
+					<div class="mb-4 mt-3">
+					<input type="text" class="form-control" placeholder="请输入统一信用代码">
+					</div>
+					<div class="mb-3 mt-4 word">地址</div>
+					<div class="mb-4 mt-3">
+					<textarea class="form-control" rows="2" placeholder="请输入地址"></textarea>
+					</div>
+					<div class="mb-3 mt-4 word">是否合格</div>
+					<div class="mb-4 mt-3">
+					<input type="radio" class="form-check-input" name="qualify">是
+					&nbsp;&nbsp;<input type="radio" class="form-check-input" name="qualify">否
+					</div>
+					<div class="mb-3 mt-4 word"> 联系人</div>
+					<div class="mb-4 mt-3">
+					<input type="text" class="form-control" placeholder="请输入联系人姓名">
+					</div>
+					<div class="mb-3 mt-4 word">电话</div>
+					<div class="mb-4 mt-3">
+					<input type="text" class="form-control" placeholder="请输入联系电话">
+					</div>
+					<div class="mb-3 mt-4 word">供应商类型</div>
+					<div class="mb-3 mt-3">
+					<select class="form-select">
+						<option>A类型</option>
+						<option>B类型</option>
+						<option>C类型</option>
+						<option>D类型</option>
+					</select>
+					<div class="mb-3 mt-3">
+						<input type="checkbox" class="form-check-input">是否为金牌供货商
+					</div>
+					<div class="mb-3 mt-4 word">备注</div>
+					<div class="mb-4 mt-3">
+					<textarea class="form-control" rows="2" placeholder="请输入备注信息"></textarea>
+					</div>
+					<div id="buttom">
+						<a href="" class="btn btn-secondary btn-sm" ><i class="fa fa-close"></i>取消</a>
+						<a href="" class="btn btn-primary btn-sm"><i class="fa fa-floppy-o"></i>保存</a>
+					</div>
+					<br><br><br><br>
+				</form>
+			</div>
+		</div>
+		<br><br><br><br>
+	</body>
+</html>
