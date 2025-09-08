@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>login</title>
+		<link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+		<style>
+			.label{
+				float: left;
+				color: gray;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="back" class="container text-center">
+			<div id="title mb-2 mt-2"><h1>学生注册表单</h1></div>
+			<div id="list">
+				<form onsubmit="checkInfo()">
+					<label for="name " class="label form-label mb-2 mt-3">姓名</label><br>
+					<input type="text" class="form-control mb-3 mt-2" name="name" id="name" placeholder="请输入您的姓名">
+					<label for="phoneNum" class="label form-label mb-2 mt-3">手机号</label><br>
+					<input type="text" class="form-control mb-3 mt-2" name="phoneNum" id="phoneNum" placeholder="请输入您的11位手机号">
+					<label for="email" class="label form-label mb-2 mt-3">邮箱</label><br>
+					<input type="email" class="form-control mb-3 mt-2" name="email" id="email" placeholder="可选,如:student@school.com">
+					<label for="password" class="label form-label mb-2 mt-3">密码</label><br>
+					<input type="password" class="form-control mb-3 mt-2" name="password" id="password" placeholder="至少6位,包含字母和数字">
+					<label for="checkPassword" class="label form-label mb-2 mt-3">确认密码</label><br>
+					<input type="password" class="form-control mb-3 mt-2" name="checkPassword" id="checkPassword" placeholder="请再次输入密码">
+					<input type="submit" class="btn btn-primary form-control ">
+				</form>
+			</div>
+		</div>
+		<script>
+			function checkInfo(){
+				let name = document.getElementById("name");
+				let nameRule = /^[\u4e00-\u9fa5]{2,5}$/;
+				let phoneNum = document.getElementById("phoneNum");
+				let phoneNumRule = /^[0-9]{11}$/;
+				let email = document.getElementById("email");
+				let emailRule = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.(com|cn|gov\.cn|org)$/;
+				let password = document.getElementById("password");
+				let passwordRule = /^[0-9a-zA-Z]{6,100}$/;
+				let checkPassword = document.getElementById("checkPassword");
+				if(!nameRule.test(name.value)){
+					alert("姓名格式错误")
+					return false;
+				}
+				if(!phoneNumRule.test(phoneNum.value)){
+					alert("电话号码格式错误")
+					return false;
+				}
+				if(!emailRule.test(email.value)){
+					alert("邮箱格式错误")
+					return false;
+				}
+				if(!passwordRule.test(password.value)){
+					alert("密码格式错误")
+					return false;
+				}
+				if(password.value != checkPassword.value){
+					alert("两次密码输入不一致")
+					return false;
+				}
+				return true;
+			}
+		</script>
+	</body>
+</html>
