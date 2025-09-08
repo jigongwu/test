@@ -11,22 +11,27 @@
 				float: left;
 				color: gray;
 			}
+			.mark{
+				float: left;
+				color: red;
+				background-color: white;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="back" class="container text-center">
 			<div id="title mb-2 mt-2"><h1>学生注册表单</h1></div>
 			<div id="list">
-				<form onsubmit="checkInfo()">
-					<label for="name " class="label form-label mb-2 mt-3">姓名</label><br>
+				<form onsubmit="return checkInfo()">
+					<label for="name " class="label form-label mb-2 mt-3">姓名</label><span for="name " class="mark  mb-2 mt-3" >*</span>
 					<input type="text" class="form-control mb-3 mt-2" name="name" id="name" placeholder="请输入您的姓名">
-					<label for="phoneNum" class="label form-label mb-2 mt-3">手机号</label><br>
+					<label for="phoneNum" class="label form-label mb-2 mt-3">手机号</label><span for="name " class="mark form-label mb-2 mt-3" >*</span>
 					<input type="text" class="form-control mb-3 mt-2" name="phoneNum" id="phoneNum" placeholder="请输入您的11位手机号">
-					<label for="email" class="label form-label mb-2 mt-3">邮箱</label><br>
+					<label for="email" class="label form-label mb-2 mt-3">邮箱</label><span></span><br>
 					<input type="email" class="form-control mb-3 mt-2" name="email" id="email" placeholder="可选,如:student@school.com">
-					<label for="password" class="label form-label mb-2 mt-3">密码</label><br>
+					<label for="password" class="label form-label mb-2 mt-3">密码</label><span for="name " class="mark form-label mb-2 mt-3" >*</span>
 					<input type="password" class="form-control mb-3 mt-2" name="password" id="password" placeholder="至少6位,包含字母和数字">
-					<label for="checkPassword" class="label form-label mb-2 mt-3">确认密码</label><br>
+					<label for="checkPassword" class="label form-label mb-2 mt-3">确认密码</label><span for="name " class="mark form-label mb-2 mt-3" >*</span><br>
 					<input type="password" class="form-control mb-3 mt-2" name="checkPassword" id="checkPassword" placeholder="请再次输入密码">
 					<input type="submit" class="btn btn-primary form-control ">
 				</form>
@@ -44,19 +49,20 @@
 				let passwordRule = /^[0-9a-zA-Z]{6,100}$/;
 				let checkPassword = document.getElementById("checkPassword");
 				if(!nameRule.test(name.value)){
-					alert("姓名格式错误")
+					alert("姓名格式错误,2-5个中文汉字")
 					return false;
 				}
 				if(!phoneNumRule.test(phoneNum.value)){
-					alert("电话号码格式错误")
+					alert("电话号码格式错误，请输入11位手机号码")
 					return false;
 				}
-				if(!emailRule.test(email.value)){
-					alert("邮箱格式错误")
+				if(email.value != "" && !emailRule.test(email.value)){
+					alert("邮箱格式错误，例如student@school.com")
 					return false;
 				}
-				if(!passwordRule.test(password.value)){
-					alert("密码格式错误")
+				
+				if(!passwordRule.test(password .value)){
+					alert("密码格式错误,请输入六位及以上密码")
 					return false;
 				}
 				if(password.value != checkPassword.value){
