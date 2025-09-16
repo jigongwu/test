@@ -1,0 +1,97 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 1000,
+  "data": [
+    {
+      "id": 10000,
+      "username": "李景",
+      "city": "2413040101",
+	  "time": "2025-9-15",
+      "experience": "病假候补假条",
+      "logins": 24,
+      "score": 57
+    },
+    {
+      "id": 10001,
+      "username": "张三",
+      "city": "2413040102",
+	  "time": "2025-9-16",
+      "experience":  "事假候补假条",
+      "logins": 58,
+      "score": 27
+    },
+    {
+      "id": 10002,
+      "username": "李四",
+      "city": "2413040103",
+	  "time": "2025-9-15",
+      "experience": "病假候补假条",
+      "logins": 77,
+      "score": 31
+    },
+    {
+      "id": 10003,
+      "username": "王五",
+      "city": "2413040104",
+	  "time": "2025-9-17",
+      "experience": "事假候补假条",
+      "logins": 157,
+      "score": 68
+    },
+    {
+      "id": 10004,
+      "username": "李华",
+      "city": "2413040105",
+	  "time": "2025-9-15",
+      "experience":"事假候补假条" ,
+      "logins": 51,
+      "score": 6
+    },
+    {
+      "id": 10005,
+      "username": "张四",
+      "city": "2413040106",
+	  "time": "2025-9-16",
+      "experience":  "病假候补假条",
+      "logins": 68,
+      "score": 87
+    },
+    {
+      "id": 10006,
+      "username": "孙五",
+      "city": "2413040107",
+	  "time": "2025-9-16",
+      "experience": "病假候补假条",
+      "logins": 37,
+      "score": 34
+    },
+    {
+      "id": 10007,
+      "username": "钱六",
+      "city": "2413040108",
+	  "time": "2025-9-18",
+      "experience": "病假候补假条",
+      "logins": 150,
+      "score": 28
+    },
+    {
+      "id": 10008,
+      "username": "吉七",
+      "city": "2413040109",
+	  "time": "2025-9-18",
+      "experience": "病假候补假条",
+      "logins": 133,
+      "score": 14
+    },
+    {
+      "id": 10009,
+      "username": "张九",
+      "city": "2413040110",
+	  "time": "2025-9-17",
+      "experience": "事假候补假条",
+      "logins": 25,
+      "score": 75
+    }
+  ]
+}

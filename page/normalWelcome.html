@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页三</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        /* 主容器样式，用于左侧栏收起时调整 */
+        .layuimini-main {
+            transition: all 0.3s ease;
+            padding: 15px;
+        }
+        /* 左侧栏收起时的主容器样式 */
+        .layuimini-main.shrink {
+            margin-left: 60px !important;
+        }
+        
+        .top-panel {
+            border: 1px solid #eceff9;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .top-panel:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .top-panel > .layui-card-body{
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+        .top-panel-number{
+            line-height:60px;
+            font-size: 30px;
+            border-right:1px solid #eceff9;
+            font-weight: 600;
+        }
+        .top-panel-tips{
+            line-height:30px;
+            font-size: 12px;
+            padding-left: 10px;
+        }
+        .layuimini-qiuck {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .layuimini-qiuck-module {
+            padding: 0; 
+            text-align: center; 
+        }
+        .layuimini-qiuck-module a {
+            display: block; 
+            padding: 15px; 
+            color: #333; 
+            height: 100%; 
+            transition: all 0.3s;
+        }
+        .layuimini-qiuck-module a:hover {
+            background-color: #f0f0f0; 
+            color: #009688; 
+            transform: translateY(-2px);
+        }
+        .layuimini-qiuck-module i {
+            font-size: 24px; 
+            display: block; 
+            margin-bottom: 5px; 
+        }
+        
+        /* 公告区域样式 */
+        .notice-card {
+            border-radius: 5px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+            height: 100%; /* 使公告卡片高度与图表一致 */
+            display: flex;
+            flex-direction: column;
+        }
+        .notice-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .notice-card .layui-card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #f0f2f5;
+            padding: 12px 16px;
+            font-weight: 500;
+        }
+        .notice-list {
+            max-height: calc(100% - 42px); /* 减去标题栏高度 */
+            overflow-y: auto;
+            flex: 1;
+        }
+        .layuimini-notice {
+            padding: 12px 16px;
+            clear: both;
+            font-size: 12px !important;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease-in-out;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .layuimini-notice:last-child {
+            border-bottom: none;
+        }
+        .layuimini-notice:hover {
+            background-color: #f6f8fa;
+            padding-left: 20px;
+        }
+        .layuimini-notice-title {
+            line-height: 22px;
+            font-size: 14px;
+            font-weight: 500;
+            padding-right: 80px !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+            display: flex;
+            align-items: center;
+        }
+        .layuimini-notice-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #009688;
+            margin-right: 8px;
+            margin-top: -2px;
+        }
+        .layuimini-notice.new .layuimini-notice-title::before {
+            background-color: #FF5722;
+        }
+        .layuimini-notice-extra {
+            position: absolute;
+            top: 50%;
+            margin-top: -8px;
+            right: 16px;
+            display: inline-block;
+            height: 16px;
+            color: #999;
+            font-size: 12px;
+        }
+        .layuimini-notice-content {
+            padding: 10px 16px 10px 24px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            background-color: #fafafa;
+            border-left: 2px solid #009688;
+            margin-top: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        /* 展开/折叠图标 */
+        .notice-toggle {
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            margin-top: -8px;
+            color: #ccc;
+            transition: transform 0.3s ease;
+        }
+        .notice-toggle.open {
+            transform: rotate(180deg);
+            color: #009688;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 图表容器样式 - 使用相对宽度，不设置固定宽度 */
+        .echarts-container {
+            background-color: #ffffff;
+            min-height: 350px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            height: 100%; /* 使图表高度与公告一致 */
+        }
+        
+        /* 布局行样式，确保内容在同一行 */
+        .content-row {
+            display: flex;
+            gap: 15px; /* 两列之间的间距 */
+            width: 100%;
+        }
+        
+        /* 图表列和公告列样式 */
+        .chart-column {
+            flex: 7; /* 占7份 */
+        }
+        .notice-column {
+            flex: 5; /* 占5份 */
+        }
+        
+        @media screen and (max-width: 768px) {
+            .layuimini-qiuck-module i {
+                font-size: 18px; 
+            }
+            .layuimini-qiuck-module cite {
+                font-size: 12px; 
+            }
+            .top-panel-number {
+                font-size: 24px;
+            }
+            
+            /* 小屏幕下改为垂直布局 */
+            .content-row {
+                flex-direction: column;
+            }
+            .chart-column, .notice-column {
+                flex: none;
+                width: 100%;
+            }
+            .echarts-container {
+                min-height: 300px;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- 假设左侧栏存在一个收起按钮，其ID为sidebarToggle -->
+<!-- <div id="sidebarToggle" style="position: fixed; left: 200px; top: 10px; z-index: 999;">收起</div> -->
+
+<div class="layuimini-main">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md3">
+            <div class="layui-card top-panel">
+                <div class="layui-card-header">今日打卡总数</div>
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-xs9 layui-col-md9 top-panel-number">4,031</div>
+                        <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
+                            <a style="color: #1aa094">▲0.02%</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-md3">
+            <div class="layui-card top-panel">
+                <div class="layui-card-header">今日缺勤总数</div>
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-xs9 layui-col-md9 top-panel-number">26</div>
+                        <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
+                             <a style="color: #bd3004">▼0.01%</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-md3">
+            <div class="layui-card top-panel">
+                <div class="layui-card-header">本周打卡总数</div>
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-xs9 layui-col-md9 top-panel-number">74,056</div>
+                        <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
+                            <a style="color: #1aa094">▲0.12%</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-md3">
+            <div class="layui-card top-panel">
+                <div class="layui-card-header">本周缺勤总数</div>
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-xs9 layui-col-md9 top-panel-number">527</div>
+                        <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
+                           <a style="color: #bd3004">▼0.06%</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row layui-col-space15" style="margin: 15px 0;">
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="fa fa-credit-card icon icon-blue">&nbsp;</i>快捷入口
+                </div>
+                <div class="layui-card-body">
+                    <div class="welcome-module">
+                        <div class="layui-row layui-col-space10 layuimini-qiuck">
+                            <div class="layui-col-xs3 layuimini-qiuck-module">
+                                <a href="javascript:;" layuimini-content-href="page/signIn.html" target="_self" data-title="考勤管理" data-icon="fa fa-gears">
+                                    <i class="fa fa-gears"></i>
+                                    <cite>考勤管理</cite>
+                                </a>
+                            </div>
+                            <div class="layui-col-xs3 layuimini-qiuck-module">
+                                <a href="javascript:;" layuimini-content-href="page/member.html" target="_self" data-title="成员管理" data-icon="fa fa-file-text">
+                                    <i class="fa fa-file-text"></i>
+                                    <cite>成员管理</cite>
+                                </a>
+                            </div>
+                            <div class="layui-col-xs3 layuimini-qiuck-module">
+                                <a href="javascript:;" layuimini-content-href="page/signInTable.html" target="_self" data-title="请假管理" data-icon="fa fa-dot-circle-o">
+                                    <i class="fa fa-dot-circle-o"></i>
+                                    <cite>请假管理</cite>
+                                </a>
+                            </div>
+                            <div class="layui-col-xs3 layuimini-qiuck-module">
+                                <a href="javascript:;" layuimini-content-href="page/norNotification.html" target="_self" data-title="通知管理" data-icon="fa fa-calendar">
+                                    <i class="fa fa-calendar"></i>
+                                    <cite>通知管理</cite>
+                                </a>
+                            </div>
+                            <div class="layui-col-xs3 layuimini-qiuck-module">
+                                <a href="javascript:;" layuimini-content-href="page/feedbackTable.html" target="_self" data-title="意见反馈" data-icon="fa fa-hourglass-end">
+                                    <i class="fa fa-hourglass-end"></i>
+                                    <cite>意见反馈</cite>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 使用flex布局确保图表和公告在同一行并对齐 -->
+    <div class="layui-row layui-col-space15 content-row">
+        <div class="chart-column">
+            <div id="echarts-records" class="echarts-container"></div>
+        </div>
+        <div class="notice-column">
+            <!-- 优化后的公告区域 -->
+            <div class="layui-card notice-card">
+                <div class="layui-card-header">
+                    <i class="fa fa-bullhorn icon icon-tip"></i>&nbsp;通知
+                    <span style="float: right; color: #009688; font-size: 12px;">
+                        <i class="fa fa-circle" style="font-size: 8px;"></i> 点击标题可展开详情
+                    </span>
+                </div>
+                <div class="layui-card-body layui-text notice-list">
+                    <!-- 带"新"标识的公告 -->
+                    <div class="layuimini-notice new">
+                        <i class="fa fa-chevron-down notice-toggle"></i>
+                        <div class="layuimini-notice-title">缺勤通报批评</div>
+                        <div class="layuimini-notice-extra">2025-09-11 23:06</div>
+                        <div class="layuimini-notice-content">
+                            界面足够简洁清爽。<br>
+                            一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                            支持多tab，可以打开多窗口。<br>
+                            支持无限级菜单和对font-awesome图标库的完美支持。<br>
+                            失效以及报错菜单无法直接打开，并给出弹出层提示完美的线上用户体验。
+                        </div>
+                    </div>
+                    
+                    <div class="layuimini-notice">
+                        <i class="fa fa-chevron-down notice-toggle"></i>
+                        <div class="layuimini-notice-title">关于缺勤处罚的新通知</div>
+                        <div class="layuimini-notice-extra">2025-09-11 12:57</div>
+                        <div class="layuimini-notice-content">
+                            界面足够简洁清爽。<br>
+                            一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                            支持多tab，可以打开多窗口。<br>
+                            支持无限级菜单和对font-awesome图标库的完美支持。
+                        </div>
+                    </div>
+                    
+                    <div class="layuimini-notice">
+                        <i class="fa fa-chevron-down notice-toggle"></i>
+                        <div class="layuimini-notice-title">关于缺勤处罚的通知</div>
+                        <div class="layuimini-notice-extra">2025-09-05 14:28</div>
+                        <div class="layuimini-notice-content">
+                            界面足够简洁清爽。<br>
+                            一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                            支持多tab，可以打开多窗口。
+                        </div>
+                    </div>
+                    
+                    <div class="layuimini-notice">
+                        <i class="fa fa-chevron-down notice-toggle"></i>
+                        <div class="layuimini-notice-title">关于账号注册的教程</div>
+                        <div class="layuimini-notice-extra">2025-09-04 11:02</div>
+                        <div class="layuimini-notice-content">
+                            界面足够简洁清爽。<br>
+                            一个接口几行代码而已直接初始化整个框架，无需复杂操作。
+                        </div>
+                    </div>
+                    
+                    <div class="layuimini-notice">
+                        <i class="fa fa-chevron-down notice-toggle"></i>
+                        <div class="layuimini-notice-title">关于学生返校通知</div>
+                        <div class="layuimini-notice-extra">2025-08-17 11:55</div>
+                        <div class="layuimini-notice-content">
+                            界面足够简洁清爽。<br>
+                            一个接口几行代码而已直接初始化整个框架，无需复杂操作。<br>
+                            支持多tab，可以打开多窗口。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+</div>
+
+<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script>
+    layui.use(['layer','miniTab', 'echarts', 'jquery'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            echarts = layui.echarts,
+			miniTab = layui.miniTab;
+			
+		miniTab.listen();
+        // 折线图初始化
+        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+        var optionRecords = {
+            title: {
+                text: '本周打卡情况'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    min: 10000,
+                    max: 11000,
+                    interval: 500
+                }
+            ],
+            series: [
+                {
+                    name: '打卡数',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {},
+                    data: [10856, 10489, 10551, 10600, 10720, 10320, 10520]
+                }
+            ]
+        };
+        echartsRecords.setOption(optionRecords);
+
+        // 窗口缩放时图表自适应
+        window.onresize = function () {
+            echartsRecords.resize();
+        };
+
+        // 公告展开/折叠功能实现
+        $('.layuimini-notice').on('click', function() {
+            var $this = $(this);
+            var $content = $this.find('.layuimini-notice-content');
+            var $toggle = $this.find('.notice-toggle');
+            
+            // 切换内容显示状态
+            if ($content.is(':visible')) {
+                $content.slideUp(300);
+                $toggle.removeClass('open');
+            } else {
+                // 关闭其他已展开的公告
+                $('.layuimini-notice-content:visible').slideUp(300);
+                $('.notice-toggle').removeClass('open');
+                
+                // 展开当前公告
+                $content.slideDown(300);
+                $toggle.addClass('open');
+            }
+        });
+
+        // 监听左侧栏收起事件（假设左侧栏收起按钮的ID为sidebarToggle）
+        // 如果你的系统中左侧栏收起有特定的事件或样式变化，请根据实际情况修改
+        $('#sidebarToggle').on('click', function() {
+            $('.layuimini-main').toggleClass('shrink');
+            // 触发图表重绘以适应新宽度
+            setTimeout(function() {
+                echartsRecords.resize();
+            }, 300); // 与CSS过渡时间一致
+        });
+
+        // 自动检测左侧栏状态变化（适用于通过其他方式改变左侧栏状态的情况）
+        var sidebarObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    // 检测到左侧栏状态变化，调整图表大小
+                    setTimeout(function() {
+                        echartsRecords.resize();
+                    }, 300);
+                }
+            });
+        });
+
+        // 观察左侧栏的变化（请根据实际左侧栏的选择器修改）
+        var sidebar = document.querySelector('.layui-side');
+        if (sidebar) {
+            sidebarObserver.observe(sidebar, { attributes: true });
+        }
+
+    });
+</script>
+</body>
+</html>
