@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>注册账号</title>
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+		<link rel="stylesheet" href="../css/public.css" media="all">
+		<style>
+			.hide{
+				display: none;
+			}
+			.list{
+				width: 500px;height: 520px; margin: 21px auto 0;
+				background-color: #fff ;
+				margin top: ;
+				border-radius: 10px;
+				padding:14px 20px;
+				box-shadow:0 0 8px #eeeeee;
+				margin: 150px auto;
+			}
+			body{
+				background: url(../images/bg2.png) repeat fixed center;
+				background-repeat: no-repeat; background-position: center center;background-size: cover;
+			}
+			h1{
+				color: #0DA1F0;
+				text-align:center;
+				font-size:25px;
+				font-weight:bold;
+			}
+			.layui-btn{
+				size:240px
+			}
+			.regChoose{
+				display: flex; 
+				  gap: 10px;
+				  justify-content: center;
+			}
+			.choosed{
+				background-color: #0DA1F0;
+				color: #fff;
+			}
+			.layui-form-label{
+				margin-left: -10px;
+				float: left;
+			}
+			.close{
+				background-color: #fff;
+				color: gray;
+				float: right;
+			}
+			.close:hover{
+				color: black;
+				background-color: gray;
+			}
+		</style>
+		<script>
+			function normalUser(){
+				document.getElementById("adForm").className = "reg-form hide";
+				document.getElementById("normalForm").className = "reg-form";
+				document.getElementById("normalUser").className = "layui-btn layui-btn-primary  layui-btn-fluid choosed"
+				document.getElementById("adUser").className = "layui-btn layui-btn-primary  layui-btn-fluid layui-border"
+				return true;
+			}
+			function adUser(){
+				document.getElementById("adForm").className = "reg-form";
+				document.getElementById("normalForm").className = "reg-form hide";
+				document.getElementById("normalUser").className = "layui-btn layui-btn-primary  layui-btn-fluid layui-border"
+				document.getElementById("adUser").className = "layui-btn layui-btn-primary  layui-btn-fluid choosed"
+				return true;
+			}
+		</script>
+	</head>
+	<body>
+			<div class = "reg-back" >
+				<div class = "list layui-form">
+					<div >
+						<button name="close" onclick="window.location = 'login-1.html';" lay-submit="" lay-filter="close" type="button" class="layui-btn layui-btn-radius close">
+						  <i class="layui-icon layui-icon-close"></i> 
+						</button>
+					</div>
+					<div class = "title layui-form-item">
+						<h1 >注册账号</h1>
+					</div>
+					<div class="regChoose">
+						<button id="normalUser"  class="layui-btn layui-btn-primary  layui-btn-fluid choosed" onclick="normalUser()">普通用户</button>
+						<button id="adUser" class="layui-btn layui-btn-primary  layui-btn-fluid layui-border" onclick="adUser()">管理员用户</button>
+					</div>
+					<form id="normalForm" class="reg-form">
+						<hr>
+						<div id="name" class="layui-form-item">
+							<label class="layui-form-label">姓名：</label>
+							<div class="layui-input-block">
+								<input name="name" lay-verify="name" placeholder="请输入姓名,2-5个汉字" class="layui-input" type="text">
+							</div>
+						</div>
+						<div id="age" class="layui-form-item">
+							<label class="layui-form-label">年龄：</label>
+							<div  class="layui-input-block"><input name="age" lay-verify="age" placeholder="请输入年龄" class="layui-input" type="number"/></div>
+						</div>
+						<div id="num" class="layui-form-item">
+							<label class="layui-form-label">学号：</label>
+							<div class="layui-input-block"><input name="num" lay-verify="num" placeholder="请输入学号,10位数字" class="layui-input" type="text"/></div>
+						</div>
+						<div id="id" class="layui-form-item">
+							<label class="layui-form-label">身份证号：</label>
+							<div class="layui-input-block"><input name="id"  lay-verify="id" placeholder="请输入身份证号码" class="layui-input" type="text"/></div>
+						</div>
+						<div id="password" class="layui-form-item">
+							<label class="layui-form-label">密码：</label>
+							<div class="layui-input-block"><input name="password" lay-verify="password" placeholder="请输入密码" class="layui-input" type="password"/></div>
+						</div>
+						<div id="checkPassword" class="layui-form-item">
+							<label class="layui-form-label">确认密码：</label>
+							<div class="layui-input-block"><input name="checkPassword" lay-verify="checkPassword" placeholder="请再次输入密码" class="layui-input" type="password"/></div>
+						</div>
+						<div class="layui-form-item">
+							<button class="layui-btn layui-btn-primary  layui-btn-fluid choosed" lay-submit="" lay-filter="normalReg">注册</button>
+						</div>
+					</form>
+					<form id="adForm" class="reg-form hide">
+						<hr>
+						<div class="layui-form-item">
+							<label class="layui-form-label">用户名：</label>
+							<div class="layui-input-block"><input name="username"  lay-verify="username" placeholder="请输入用户名" class="layui-input" type="text" value="Admin_"></div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">管理密钥：</label>
+							<div class="layui-input-block"><input name="adPassword" lay-verify="sadPassword" placeholder="请输入管理密钥" class="layui-input" type="password"></div>
+						</div>
+						<div class="layui-form-item">
+							<button class="layui-btn layui-btn-primary  layui-btn-fluid choosed" lay-submit="" lay-filter="adReg">注册</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		
+		
+	</body>
+	<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+	<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+	<script>
+		layui.use(['form'], function () {
+		    var form = layui.form,
+		        layer = layui.layer;
+		    if (top.location != self.location) top.location = self.location;
+			form.on('submit(normalReg)', function (data) {
+			        data = data.field;
+					let nameRul = /^[\u4e00-\u9fa5]{2,5}$/;
+					let ageRul = /^[1-9]\d{0,2}$/;
+					let numRul = /^\d{10}$/;
+					let idRul = /^\d{17}[\dXx]$/;
+					let passwordRul = /^[\S]{6,16}$/;
+					if (data.name == '') {
+					    layer.msg('姓名不能为空');
+					    return false;
+					}
+					if (data.age == '') {
+					    layer.msg('年龄不能为空');
+					    return false;
+					}
+					if (data.num == '') {
+					    layer.msg('学号不能为空');
+					    return false;
+					}
+					if (data.id == '') {
+					    layer.msg('身份证号码不能为空');
+					    return false;
+					}
+					if (data.password == '') {
+					    layer.msg('密码不能为空');
+					    return false;
+					}
+					if (data.checkPassword == '') {
+					    layer.msg('确认密码不能为空');
+					    return false;
+					}
+					if(!nameRul.test(data.name)){
+						layer.msg('姓名格式不正确，应输入2-5汉字');
+						return false
+					}
+					if(!ageRul.test(data.age)){
+						layer.msg('年龄格式不正确，应输入小于120的正整数');
+						return false
+					}
+					if(!numRul.test(data.num)){
+						layer.msg('学号格式不正确，应输入10位数字');
+						return false
+					}
+					if(!idRul.test(data.id)){
+						layer.msg('身份证号格式不正确，应输入18位数字（最后一位可以是x）');
+						return false
+					}
+					if(!passwordRul.test(data.password)){
+						layer.msg('密码格式不正确，应输入6-16位数字、字母组合');
+						return false
+					}
+					if(data.password != data.checkPassword){
+						layer.msg('两次密码输入不一致');
+						return false
+					}
+			        layer.msg('注册成功', function () {
+							window.location = 'login-1.html';
+			        });
+			        return false;
+			    });
+				form.on('submit(adReg)', function (data) {
+				        data = data.field;
+						let usernameRul = /^Admin_\d{2}$/;
+						let adPasswordRul = /^[\S]{6,16}$/;
+						if (data.username == '') {
+						    layer.msg('用户名不能为空');
+						    return false;
+						}
+						if (data.adPassword == '') {
+						    layer.msg('管理密钥名不能为空');
+						    return false;
+						}
+						if(!usernameRul.test(data.username)){
+							layer.msg('用户名格式不正确，应为：Admin_加两位数字');
+							return false
+						}
+						if(!adPasswordRul.test(data.username)){
+							layer.msg('管理密钥不正确，应输入6-16位数字、字母组合');
+							return false
+						}
+						layer.msg('注册成功', function () {
+								window.location = 'login-1.html';
+						});
+						return false;
+				    });
+			});
+	</script>
+</html>

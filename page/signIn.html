@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日签到</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        neutral: '#F3F4F6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .shadow-soft {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            .gradient-bg {
+                background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4 font-sans">
+    <!-- 签到卡片 -->
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-soft overflow-hidden transition-all duration-300 hover:shadow-lg">
+        <!-- 顶部装饰条 -->
+        <div class="gradient-bg h-2"></div>
+        
+        <!-- 卡片内容 -->
+        <div class="p-6 md:p-8">
+            <!-- 标题区域 -->
+            <div class="text-center mb-8">
+                <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-gray-800 mb-2">每日签到</h1>
+                <p class="text-gray-500" id="current-date">2023年10月15日 星期日</p>
+            </div>
+            
+            <!-- 签到状态展示 -->
+            <div class="flex flex-col items-center justify-center mb-8">
+                <div class="w-32 h-32 rounded-full bg-neutral flex items-center justify-center mb-4">
+                    <i class="fa fa-calendar-check-o text-5xl text-primary" id="status-icon"></i>
+                </div>
+                <p class="text-gray-600 text-lg" id="status-text">今日尚未签到</p>
+            </div>
+            
+            <!-- 连续签到统计（仅作为展示，无实际逻辑） -->
+            <div class="bg-neutral rounded-xl p-4 mb-8 text-center">
+                <p class="text-gray-500 text-sm mb-1">当前连续签到</p>
+                <p class="text-2xl font-bold text-gray-800">0 天</p>
+            </div>
+            
+            <!-- 签到按钮 -->
+            <button id="check-in-btn" class="w-full py-4 px-6 bg-primary hover:bg-primary/90 text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <i class="fa fa-check mr-2"></i>立即签到
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 获取当前日期并显示
+        function updateDate() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('zh-CN', options);
+        }
+        
+        // 初始化页面
+        function init() {
+            updateDate();
+        }
+        
+        // 更新签到状态UI
+        function updateCheckInStatus(isCheckedIn) {
+            const statusIcon = document.getElementById('status-icon');
+            const statusText = document.getElementById('status-text');
+            const checkInBtn = document.getElementById('check-in-btn');
+            
+            if (isCheckedIn) {
+                statusIcon.className = 'fa fa-calendar-check-o text-5xl text-secondary';
+                statusText.textContent = '今日已签到';
+                checkInBtn.disabled = true;
+                checkInBtn.classList.remove('bg-primary', 'hover:bg-primary/90');
+                checkInBtn.classList.add('bg-gray-300', 'cursor-not-allowed');
+                checkInBtn.innerHTML = '<i class="fa fa-check-circle mr-2"></i>已完成签到';
+            } else {
+                statusIcon.className = 'fa fa-calendar-check-o text-5xl text-primary';
+                statusText.textContent = '今日尚未签到';
+                checkInBtn.disabled = false;
+                checkInBtn.classList.remove('bg-gray-300', 'cursor-not-allowed');
+                checkInBtn.classList.add('bg-primary', 'hover:bg-primary/90');
+                checkInBtn.innerHTML = '<i class="fa fa-check mr-2"></i>立即签到';
+            }
+        }
+        
+        // 处理签到逻辑
+        function handleCheckIn() {
+            updateCheckInStatus(true);
+            showSuccessToast();
+        }
+        
+        // 显示签到成功提示
+        function showSuccessToast() {
+            // 创建提示元素
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-6 py-3 rounded-lg shadow-lg flex items-center z-50 opacity-0 transition-opacity duration-300';
+            toast.innerHTML = '<i class="fa fa-check-circle mr-2"></i>签到成功！';
+            document.body.appendChild(toast);
+            
+            // 显示提示
+            setTimeout(() => {
+                toast.classList.replace('opacity-0', 'opacity-100');
+            }, 100);
+            
+            // 3秒后隐藏提示
+            setTimeout(() => {
+                toast.classList.replace('opacity-100', 'opacity-0');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+        
+        document.getElementById('check-in-btn').addEventListener('click', handleCheckIn);
+        
+        // 初始化页面
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+
+    
